@@ -20,11 +20,16 @@ System.register(["../models/index"], function (exports_1, context_1) {
             NegociacaoService = class NegociacaoService {
                 obterNegociacoes(handler) {
                     return __awaiter(this, void 0, void 0, function* () {
-                        return fetch('http://localhost:8080/dados')
-                            .then(response => handler(response))
-                            .then(response => response.json())
-                            .then((dados) => dados
-                            .map(dado => new index_1.Negociacao(new Date(), dado.vezes, parseFloat((dado.montante / dado.vezes).toFixed(2)))));
+                        try {
+                            const response_1 = yield fetch('http://localhost:8080/dados');
+                            const response_2 = handler(response_1);
+                            const dados = yield response_2.json();
+                            return dados.map(dado => new index_1.Negociacao(new Date(), dado.vezes, parseFloat((dado.montante / dado.vezes).toFixed(2))));
+                        }
+                        catch (err) {
+                            console.log(err.message);
+                            throw new Error('Não foi possível importar as negociações.');
+                        }
                     });
                 }
             };

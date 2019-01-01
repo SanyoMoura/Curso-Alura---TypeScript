@@ -74,6 +74,25 @@ export default class NegociacaoController {
 
 
     @throttle()
+    async importa() {
+        try {
+            const newNegociacoes = await this._service
+                .obterNegociacoes(response => {
+                    if (!response.ok) 
+                        throw new Error(response.statusText);
+                    return response;
+                });
+
+            newNegociacoes
+                .filter(negociacao => !this._negociacoes.array.some(jaImportada => negociacao.isEqual(jaImportada)))
+                .forEach(negociacao => this._negociacoes.adiciona(negociacao));
+
+            this._negociacoesView.update(this._negociacoes);
+        } catch(err) {
+            this._mensagemView.update(err.message);
+        }
+    }
+    /*
     importa() {
         this._service.obterNegociacoes(response => {
             if (!response.ok) 
@@ -88,9 +107,7 @@ export default class NegociacaoController {
 
                 this._negociacoesView.update(this._negociacoes);
             })
-            .catch((err: Error) => {
-                this._mensagemView.update('Não foi possível importar os dados.');
-                console.log(err.message);
-            });
+            .catch((err: Error) => this._mensagemView.update(err.message));
     }
+    */
 }

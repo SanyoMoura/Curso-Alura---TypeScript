@@ -1,6 +1,6 @@
-import { Printable, Equable } from "./index";
+import { MyObject } from "./index";
 
-export class Negociacao implements Printable, Equable<Negociacao> {
+export class Negociacao implements MyObject<Negociacao> {
 
     /*
     constructor(private _data: Date, private _quantidade: number, private _valor: number) {}

@@ -1,6 +1,6 @@
-import { Negociacao, Printable, Equable } from "./index";
+import { Negociacao, MyObject } from "./index";
 
-export class Negociacoes implements Printable, Equable<Negociacoes> {
+export class Negociacoes implements MyObject<Negociacoes> {
     // private _negociacoes: Array<Negociacao> = [];
     private _negociacoes: Negociacao[] = [];    // maneira mais elegante que acima
 
